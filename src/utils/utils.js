@@ -1,4 +1,4 @@
-import { getCurrentWorkingDirectory, changeWorkingDirectory } from '../working-directory/workingDirectory.js';
+import { getCurrentWorkingDirectory, changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
 
 export async function displayWelcomeMessage(username) {
   const currentWorkingDirectory = await getCurrentWorkingDirectory();
@@ -27,6 +27,21 @@ export async function processCommand(user, command) {
     case '.exit':
       await displayGoodbyeMessage(user.username);
       process.exit();
+      break;
+    case 'up':
+      try {
+        const newWorkingDirectory = await goUp();
+        console.log(`You are currently in ${newWorkingDirectory}`);
+      } catch (error) {
+        console.error('Operation failed');
+      }
+      break;
+    case 'ls':
+      try {
+        await listDirectory();
+      } catch (error) {
+        console.error('Operation failed');
+      }
       break;
     default:
       console.error('Operation failed');
