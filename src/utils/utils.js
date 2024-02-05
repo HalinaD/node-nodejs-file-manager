@@ -1,4 +1,5 @@
 import { getCurrentWorkingDirectory, changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
+import { read, add, rename, copy, move, remove } from '../fs/fileSystem.js';
 
 export async function displayWelcomeMessage(username) {
   const currentWorkingDirectory = await getCurrentWorkingDirectory();
@@ -13,7 +14,8 @@ export async function displayGoodbyeMessage(username) {
 }
 
 export async function processCommand(user, command) {
-  const [operation, targetPath] = command.split(' ');
+  const [operation, ...params] = command.split(' ');
+  const targetPath = params.join(' ');
 
   switch (operation) {
     case 'cd':
@@ -43,8 +45,30 @@ export async function processCommand(user, command) {
         console.error('Operation failed');
       }
       break;
+    case 'cat':
+      await read(targetPath);
+      break;
+    case 'add':
+      await add(targetPath);
+      break;
+    case 'rn':
+      await rename(...params);
+      break;
+    case 'cp':
+      await copy(...params);
+      break;
+    case 'mv':
+      await move(...params);
+      break;
+    case 'rm':
+      await remove(targetPath);
+      break;
     default:
       console.error('Operation failed');
       break;
+  }
+  if (operation === 'ls') {
+    const currentWorkingDirectory = await getCurrentWorkingDirectory();
+    console.log(`You are currently in ${currentWorkingDirectory}`);
   }
 }
