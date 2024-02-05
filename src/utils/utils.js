@@ -3,6 +3,8 @@ import { read, add, rename, copy, move, remove } from '../fs/fileSystem.js';
 import { calculateHash } from '../hash/hash.js';
 import { getEOL, getCPUsInfo, getHomeDirectory, getUsername, getArchitecture } from '../os/operatingSystem.js';
 import { printCurrentWorkingDirectory } from '../working-directory/currentDirectory.js';
+import { compress } from '../zip/compress.js';
+import { decompress } from '../zip/decompress.js';
 
 export async function displayWelcomeMessage(username) {
   console.log(`Welcome to the File Manager, ${username}!`);
@@ -98,6 +100,22 @@ export async function processCommand(user, command) {
           console.error('Operation failed');
         }
         break;
+    case 'compress':
+      try {
+        const [sourcePath, destinationPath] = params;
+        await compress(sourcePath, destinationPath);
+      } catch (error) {
+        console.error('Operation failed');
+      }
+      break;
+    case 'decompress':
+      try {
+        const [sourcePath, destinationPath] = params;
+        await decompress(sourcePath, destinationPath);
+      } catch (error) {
+        console.error('Operation failed');
+      }
+      break;
     default:
       console.error('Invalid input');
       printCurrentWorkingDirectory();
