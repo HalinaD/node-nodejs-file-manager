@@ -9,14 +9,14 @@ export function getCPUsInfo() {
   const cpus = os.cpus();
   const cpuInfoArray = [];
 
-  cpus.forEach((cpu) => {
-    const cpuInfo = { 
+  cpus.forEach((cpu, index) => {
+    const cpuInfo = {
+      cpu: `${index + 1}`,
       model: cpu.model.split('@')[0].trim(),
-      speed: `${(cpu.speed / 1000).toFixed(2)} GHz`
+      speed: `${(cpu.speed / 1000).toFixed(2)} GHz`,
     };
     cpuInfoArray.push(cpuInfo);
   });
-
   console.log(cpuInfoArray);
 }
 
