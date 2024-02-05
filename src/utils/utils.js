@@ -27,6 +27,7 @@ export async function processCommand(user, command) {
         console.log(`You are currently in ${newWorkingDirectory}`);
       } catch (error) {
         console.error(error.message);
+        printCurrentWorkingDirectory();
       }
       break;
     case '.exit':
