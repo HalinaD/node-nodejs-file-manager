@@ -1,6 +1,7 @@
 import { getCurrentWorkingDirectory, changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
 import { read, add, rename, copy, move, remove } from '../fs/fileSystem.js';
 import { calculateHash } from '../hash/hash.js';
+import { getEOL, getCPUsInfo, getHomeDirectory, getUsername, getArchitecture } from '../os/operatingSystem.js';
 
 export async function displayWelcomeMessage(username) {
   const currentWorkingDirectory = await getCurrentWorkingDirectory();
@@ -70,7 +71,33 @@ export async function processCommand(user, command) {
       } catch (error) {
         console.error('Operation failed');
       }
-  break;
+      break;
+    case 'os':
+      try {
+        switch (params[0]) {
+          case '--EOL':
+            getEOL();
+            break;
+          case '--cpus':
+            getCPUsInfo();
+            break;
+          case '--homedir':
+            getHomeDirectory();
+            break;
+          case '--username':
+            getUsername();
+            break;
+          case '--architecture':
+            getArchitecture();
+            break;
+          default:
+            console.error('Invalid os operation');
+            break;
+          }
+        } catch (error) {
+          console.error('Operation failed');
+        }
+        break;
     default:
       console.error('Operation failed');
       break;
