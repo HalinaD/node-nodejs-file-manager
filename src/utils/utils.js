@@ -1,18 +1,17 @@
-import { getCurrentWorkingDirectory, changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
+import { changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
 import { read, add, rename, copy, move, remove } from '../fs/fileSystem.js';
 import { calculateHash } from '../hash/hash.js';
 import { getEOL, getCPUsInfo, getHomeDirectory, getUsername, getArchitecture } from '../os/operatingSystem.js';
+import { printCurrentWorkingDirectory } from '../working-directory/currentDirectory.js';
 
 export async function displayWelcomeMessage(username) {
-  const currentWorkingDirectory = await getCurrentWorkingDirectory();
   console.log(`Welcome to the File Manager, ${username}!`);
-  console.log(`You are currently in ${currentWorkingDirectory}`);
+  printCurrentWorkingDirectory();
 }
 
 export async function displayGoodbyeMessage(username) {
-  const currentWorkingDirectory = await getCurrentWorkingDirectory();
   console.log(`Thank you for using File Manager, ${username}, goodbye!`);
-  console.log(`You are currently in ${currentWorkingDirectory}`);
+  printCurrentWorkingDirectory();
 }
 
 export async function processCommand(user, command) {
@@ -73,6 +72,7 @@ export async function processCommand(user, command) {
       }
       break;
     case 'os':
+      printCurrentWorkingDirectory();
       try {
         switch (params[0]) {
           case '--EOL':
@@ -91,7 +91,7 @@ export async function processCommand(user, command) {
             getArchitecture();
             break;
           default:
-            console.error('Invalid os operation');
+            console.error('Invalid input');
             break;
           }
         } catch (error) {
@@ -99,11 +99,11 @@ export async function processCommand(user, command) {
         }
         break;
     default:
-      console.error('Operation failed');
+      console.error('Invalid input');
+      printCurrentWorkingDirectory();
       break;
   }
   if (operation === 'ls') {
-    const currentWorkingDirectory = await getCurrentWorkingDirectory();
-    console.log(`You are currently in ${currentWorkingDirectory}`);
+    printCurrentWorkingDirectory();
   }
 }

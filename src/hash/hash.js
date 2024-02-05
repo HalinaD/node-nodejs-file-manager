@@ -1,7 +1,7 @@
 import { createReadStream, promises as fsPromises } from 'fs';
 import path from 'path';
 import { createHash } from 'crypto';
-import { printCurrentWorkingDirectory } from '../fs/fileSystem.js'
+import { printCurrentWorkingDirectory } from '../working-directory/currentDirectory.js'
 
 export async function calculateHash(filePath) {
   const currentWorkingDirectory = process.cwd();

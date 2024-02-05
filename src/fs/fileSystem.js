@@ -1,6 +1,7 @@
 import { promises as fsPromises, createReadStream, createWriteStream } from 'fs';
 import path from 'path';
 import { getCurrentWorkingDirectory } from '../working-directory/workingDirectory.js';
+import { printCurrentWorkingDirectory } from '../working-directory/currentDirectory.js';
 
 export async function read(filePath) {
   try {
@@ -110,11 +111,6 @@ export async function remove(filePath) {
     console.error('Operation failed');
   }
   printCurrentWorkingDirectory();
-}
-
-export async function printCurrentWorkingDirectory() {
-  const currentWorkingDirectory = await getCurrentWorkingDirectory();
-  console.log(`You are currently in ${currentWorkingDirectory}`);
 }
 
 function handleError(error) {
