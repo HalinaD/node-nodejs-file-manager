@@ -1,5 +1,6 @@
 import { getCurrentWorkingDirectory, changeWorkingDirectory, goUp, listDirectory } from '../working-directory/workingDirectory.js';
 import { read, add, rename, copy, move, remove } from '../fs/fileSystem.js';
+import { calculateHash } from '../hash/hash.js';
 
 export async function displayWelcomeMessage(username) {
   const currentWorkingDirectory = await getCurrentWorkingDirectory();
@@ -63,6 +64,13 @@ export async function processCommand(user, command) {
     case 'rm':
       await remove(targetPath);
       break;
+    case 'hash':
+      try {
+        await calculateHash(targetPath);
+      } catch (error) {
+        console.error('Operation failed');
+      }
+  break;
     default:
       console.error('Operation failed');
       break;

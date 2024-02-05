@@ -112,7 +112,7 @@ export async function remove(filePath) {
   printCurrentWorkingDirectory();
 }
 
-async function printCurrentWorkingDirectory() {
+export async function printCurrentWorkingDirectory() {
   const currentWorkingDirectory = await getCurrentWorkingDirectory();
   console.log(`You are currently in ${currentWorkingDirectory}`);
 }
